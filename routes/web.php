@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProgressController;
@@ -25,7 +26,8 @@ Route::get('/data/wo', function () {
     return response()->json($data);
 });
 
-
+//modify/REVISI
+Route::post('/booking', [BookingController::class, 'simpanBooking']);
 
 
 Route::post('/input/customer/booking', [ServiceController::class, 'inputCustomer'])->name('inputCustomer');

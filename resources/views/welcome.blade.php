@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-    <style>
-        .alert {
-            position: absolute;
-    z-index: 1000; /* Atur z-index sesuai kebutuhan */
-    top: 200px; /* Sesuaikan posisi vertikal sesuai kebutuhan */
-    left: 50%; /* Pusatkan horizontal dengan transfrom */
-    transform: translateX(-50%);
-    background-color: #f44336; /* Warna latar belakang */
-    color: white; /* Warna teks */
-    padding: 5px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 1.5; /* Atur tinggi baris */
-            
-        }
-    </style>
+<style>
+    .alert {
+        position: absolute;
+        z-index: 1000;
+        /* Atur z-index sesuai kebutuhan */
+        top: 200px;
+        /* Sesuaikan posisi vertikal sesuai kebutuhan */
+        left: 50%;
+        /* Pusatkan horizontal dengan transfrom */
+        transform: translateX(-50%);
+        background-color: #f44336;
+        /* Warna latar belakang */
+        color: white;
+        /* Warna teks */
+        padding: 5px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 1.5;
+        /* Atur tinggi baris */
+
+    }
+</style>
 
 <head>
     <meta charset="utf-8" />
@@ -53,28 +59,34 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about" style="font-family: 'Montserrat', sans-serif; color: white;font-weight:bold;">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects" style="font-family: 'Montserrat', sans-serif; color: white;font-weight:bold;">Booking</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#signup" style="font-family: 'Montserrat', sans-serif; color: white;font-weight:bold;">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about"
+                            style="font-family: 'Montserrat', sans-serif; color: white;font-weight:bold;">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects"
+                            style="font-family: 'Montserrat', sans-serif; color: white;font-weight:bold;">Booking</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#signup"
+                            style="font-family: 'Montserrat', sans-serif; color: white;font-weight:bold;">Contact</a>
+                    </li>
                 </ul>
             </div>
-        </div>  
+        </div>
     </nav>
     <!-- Masthead-->
     <header class="masthead" style="font-family: 'Montserrat', sans-serif;">
-        @if(session('error'))
-    <div class="alert alert-danger">
-        {!! session('error') !!}
-    </div>
-@endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {!! session('error') !!}
+            </div>
+        @endif
 
         <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-                <div class="text-center">
-                    <h1 class="mx-auto my-0 text-uppercase" style="color: white;">Let's repair</h1>
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5" style="font-size: 24px; color: white;text-align: center;">Enchanting Transformations for a Brand-New Feel</h2>
-                    <a class="btn btn-primary" href="#projects">Book Now</a>
-                </div>
+            <div class="text-center">
+                <h1 class="mx-auto my-0 text-uppercase" style="color: white;">Let's repair</h1>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5" style="font-size: 24px; color: white;text-align: center;">
+                    Enchanting Transformations for a Brand-New Feel</h2>
+                <a class="btn btn-primary" href="#projects">Book Now</a>
             </div>
+        </div>
         </div>
     </header>
     <!-- About-->
@@ -84,7 +96,10 @@
                 <div class="col-lg-8">
                     <h2 class="text-white mb-4">"Your Comfort is Our Priority"</h2>
                     <p class="text-white-50">
-                        Discover ultimate comfort with BMW. Our top priority is ensuring your comfort in every interaction. From our welcoming ambiance to our attentive staff, every detail is designed to make you feel at ease. Experience service that revolves around your well-being. Explore BMW today.
+                        Discover ultimate comfort with BMW. Our top priority is ensuring your comfort in every
+                        interaction. From our welcoming ambiance to our attentive staff, every detail is designed to
+                        make you feel at ease. Experience service that revolves around your well-being. Explore BMW
+                        today.
                     </p>
                 </div>
             </div>
@@ -103,44 +118,54 @@
                     <div class="featured-text text-center text-lg-left">
                         <div class="col-md-6">
                             <p><a href="#new-book">Booking baru</a></p>
-                            <button type="button" class="btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                                 Member BMW lama
-                              </button>
-                              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
                                 <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Member Lama</h1>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="input-group input-group-lg flex-nowrap mb-2">
-                                            <input type="text" class="form-control" placeholder="Police Number" name="no_polisi"
-                                                aria-label="plat_nomor" aria-describedby="addon-wrapping">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Member Lama</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
-                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
-                                            name="jenis_service">
-                                            <option selected>Select Service Type</option>
-                                            <option value="Ganti Oli">Ganti Oli</option>
-                                            <option value="Ganti minyak rem">Ganti minyak rem</option>
-                                            <option value="Ganti Filter Udara">Ganti Filter Udara</option>
-                                            <option value="Ganti filter AC">Ganti filter AC</option>
-                                            <option value="Pengecekan Kendaraan">Pengecekan Kendaraan</option>
-                                        </select>
-                            
-                                        <div class="input-group input-group-lg flex-nowrap mb-2">
-                                            <input type="date" class="form-control" placeholder="tanggal Booking"
-                                                aria-label="tanggal_booking" aria-describedby="addon-wrapping"
-                                                name="tgl_booking" min="<?php echo date("Y-m-d"); ?>">
-                                        </div>
+                                        <form action="/booking" method="post">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Police Number" name="no_polisi"
+                                                        aria-label="plat_nomor" aria-describedby="addon-wrapping">
+                                                </div>
+
+                                                <select class="form-select form-select-lg mb-3"
+                                                    aria-label=".form-select-lg example" name="jenis_mobil">
+                                                    <option selected>Select Service Type</option>
+                                                    <option value="BMW SPORT">Ganti oli</option>
+                                                    <option value="Seri 2">Ganti minyak rem</option>
+                                                    <option value="Seri 3">Ganti filter udara</option>
+                                                    <option value="X1">Ganti filter AC</option>
+                                                    <option value="X2">Pengecekan kendaraan</option>
+                                                </select>
+
+                                                <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="tanggal Booking" aria-label="tanggal_booking"
+                                                        aria-describedby="addon-wrapping" name="tgl_booking"
+                                                        min="<?php echo date('Y-m-d'); ?>">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary">Confirm</button>
-                                    </div>
-                                  </div>
                                 </div>
-                              </div>
+                            </div>
                         </div>
                         <h4>- Formulir Booking Service -</h4>
                         <form action="/input/customer/booking" method="post" id="new-book">
@@ -150,11 +175,7 @@
                                     name="email" aria-describedby="addon-wrapping">
                             </div>
                             <div class="input-group input-group-lg flex-nowrap mb-2">
-                                <input 
-                                type="text" 
-                                class="form-control" 
-                                placeholder="Fullname" 
-                                aria-label="nama"
+                                <input type="text" class="form-control" placeholder="Fullname" aria-label="nama"
                                     name="nama" aria-describedby="addon-wrapping">
                             </div>
                             <div class="input-group input-group-lg flex-nowrap mb-2">
@@ -162,12 +183,12 @@
                                     name="alamat" aria-describedby="addon-wrapping">
                             </div>
                             <div class="input-group input-group-lg flex-nowrap mb-2">
-                                <input type="number" class="form-control" placeholder="Phone Number" aria-label="no_telp"
-                                    name="no_telp" aria-describedby="addon-wrapping">
+                                <input type="number" class="form-control" placeholder="Phone Number"
+                                    aria-label="no_telp" name="no_telp" aria-describedby="addon-wrapping">
                             </div>
                             <div class="input-group input-group-lg flex-nowrap mb-2">
-                                <input type="text" class="form-control" placeholder="Police Number" name="no_polisi"
-                                    aria-label="plat_nomor" aria-describedby="addon-wrapping">
+                                <input type="text" class="form-control" placeholder="Police Number"
+                                    name="no_polisi" aria-label="plat_nomor" aria-describedby="addon-wrapping">
                             </div>
                             <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                                 name="jenis_mobil">
@@ -183,11 +204,11 @@
                                 <option value="X6">X6</option>
                                 <option value="X7">X7</option>
                             </select>
-                
+
                             <div class="input-group input-group-lg flex-nowrap mb-2">
                                 <input type="date" class="form-control" placeholder="tanggal Booking"
-                                    aria-label="tanggal_booking" aria-describedby="addon-wrapping"
-                                    name="tgl_booking" min="<?php echo date("Y-m-d"); ?>">
+                                    aria-label="tanggal_booking" aria-describedby="addon-wrapping" name="tgl_booking"
+                                    min="<?php echo date('Y-m-d'); ?>">
                             </div>
                             <button class="btn btn-success w-100" type="submit">Confirm</button>
                             <p class="fs-5">Already Booked? <a href="/login/customer">klik disini</a></p>

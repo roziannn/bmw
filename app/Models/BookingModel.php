@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PelangganModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BookingModel extends Model
 {
@@ -13,8 +14,9 @@ class BookingModel extends Model
     protected $guarded = '';
 
 
-    // public function wo_detail()
-    // {
-    //     return $this->hasMany(DetailWO_Model::class, 'no_wo'); //Has many
-    // }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(PelangganModel::class, 'no_polisi', 'no_polisi');
+    }
 }

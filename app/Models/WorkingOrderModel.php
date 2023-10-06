@@ -14,8 +14,14 @@ class WorkingOrderModel extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+
     public function pelanggan()
     {
         return $this->belongsTo(PelangganModel::class, 'no_polisi', 'no_polisi'); //One to one
+    }
+
+    public function booking()
+    {
+        return $this->belongsTo(BookingModel::class, 'no_polisi', 'no_polisi');
     }
 }

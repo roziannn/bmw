@@ -13,4 +13,9 @@ class PelangganModel extends Model
     protected $primaryKey = 'no_polisi';
     public $incrementing = false;
     protected $keyType = 'string';
+
+    public function bookings()
+    {
+        return $this->hasMany(BookingModel::class, 'no_polisi', 'no_polisi');
+    }
 }

@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 // use Illuminate\Http\Request;
+
 use App\Models\User;
+use App\Models\BookingModel;
 use Illuminate\Http\Request;
+use App\Models\WorkingOrderModel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
-use App\Models\WorkingOrderModel;
 
 
 class AuthController extends Controller
@@ -21,16 +24,16 @@ class AuthController extends Controller
     }
 
     public function dashboard()
-{
-    return view('auth.dashboard'); // 'dashboard' adalah nama view (blade) halaman kosong
-}
+    {
+        return view('auth.dashboard'); // 'dashboard' adalah nama view (blade) halaman kosong
+    }
 
-public function kasir()
-{
-    $dataWO = WorkingOrderModel::whereIn('status', ['Menunggu Pembayaran', 'Done'])->get();
+    public function kasir()
+    {
+        $dataWO = WorkingOrderModel::whereIn('status', ['Menunggu Pembayaran', 'Done'])->get();
 
-    return view('admin.kasir')->with('dataWO', $dataWO); // 'kasir' adalah nama view (blade) halaman kosong
-}
+        return view('admin.kasir')->with('dataWO', $dataWO); // 'kasir' adalah nama view (blade) halaman kosong
+    }
 
     public function tampilanLoginAdmin()
     {
@@ -64,7 +67,7 @@ public function kasir()
     }
 
 
-    
+
 
     public function logoutAdmin(Request $request)
     {
@@ -86,7 +89,7 @@ public function kasir()
             auth()->login($user);
 
             // Redirect the user to the desired location after login
-        return redirect()->route('dashboardTable', ['id' => $user->id]);
+            return redirect()->route('dashboardTable', ['id' => $user->id]);
         } else {
             // Authentication failed, redirect back to the login page with an error message.
             return redirect()->route('login_admin')->with('error', 'Invalid username or password.');
@@ -107,7 +110,7 @@ public function kasir()
             auth()->login($user);
 
             // Redirect the user to the desired location after login
-        return redirect()->route('kasirTable', ['id' => $user->id]);
+            return redirect()->route('kasirTable', ['id' => $user->id]);
         } else {
             // Authentication failed, redirect back to the login page with an error message.
             return redirect()->route('login_admin')->with('error', 'Invalid username or password.');
@@ -152,6 +155,8 @@ public function kasir()
             return redirect()->back()->withInput()->with('error', 'You are not a regular user.');
         }
     }
+
+
 
 
     public function logoutCustomer(Request $request)
