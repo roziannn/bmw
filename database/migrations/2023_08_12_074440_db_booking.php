@@ -21,6 +21,8 @@ class DbBooking extends Migration
             $table->string('no_polisi')->nullable();
             $table->foreign('no_polisi')->references('no_polisi')->on('db_pelanggan')->onDelete('cascade');
             $table->date('tgl_booking');
+            $table->string('service_type')->nullable();
+            $table->string('keluhan')->nullable();
             $table->string('pengerjaan')->nullable();
             $table->string('no_wo')->nullable();
             $table->string('status')->default('pending');

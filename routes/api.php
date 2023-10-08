@@ -32,9 +32,12 @@ Route::get('/pelanggan/{id}', function ($id) {
     $tglBookingTerbaru = BookingModel::where('no_polisi', $id)
         ->orderBy('tgl_booking', 'desc')
         ->first();
+        $service = BookingModel::where('no_polisi', $id)->orderBy('tgl_booking', 'desc')
+        ->first();
 
     return [
         'pelanggan' => $pelanggan,
+        'service' => $service,
         'tgl_booking_terbaru' => $tglBookingTerbaru ? $tglBookingTerbaru->tgl_booking : null,
     ];
 });

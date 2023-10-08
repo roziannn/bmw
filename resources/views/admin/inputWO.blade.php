@@ -31,6 +31,7 @@
                                     <button type="submit" class="btn" style="color: aliceblue"><i
                                             class="bx bx-save bx-md " style="width: 10px; margin-right: 10%;"></i></button>
                                 </div>
+
                             </div>
 
                         </div>
@@ -102,8 +103,8 @@
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="jenis_mobil" class="form-label">Car Model</label>
-                                                        <input required type="text" class="form-control" id="jenis_mobil"
-                                                            name="jenis_mobil">
+                                                        <input required type="text" class="form-control"
+                                                            id="jenis_mobil" name="jenis_mobil">
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,9 +126,9 @@
 
                                         <div class="col-12">
                                             <div class="mb-3">
-                                                <label for="no_kerangka" class="form-label">Chassis Number</label>
-                                                <input required type="text" class="form-control" id="no_kerangka"
-                                                    name="no_kerangka">
+                                                <label for="no_rangka" class="form-label">Chassis Number</label>
+                                                <input required type="text" class="form-control" id="no_rangka"
+                                                    name="no_rangka">
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -147,15 +148,36 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal"></button>
                                                         </div>
+                                                        <div class="container mt-3">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="mb-1">
+                                                                        <label for="service" class="form-label">Service
+                                                                            Type<span class="text-danger">*</span></label>
+                                                                        <input required type="text"
+                                                                            class="form-control" id="service_type"
+                                                                            name="service_type">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="mb-2">
+                                                                        <label for="keluhan" class="form-label">Keluhan
+                                                                            Customer</label>
+                                                                        <textarea class="form-control" id="keluhan" name="keluhan" rows="2"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                        </div>
 
                                                         <div class="container mt-3">
                                                             <form>
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <div class="mb-1">
-                                                                            <label for="service" class="form-label">Jenis
-                                                                                Layanan</label>
-                                                                            @foreach ($layananOptions as $layanan)
+                                                                            <label for="service" class="form-label">Mobil
+                                                                                Bensin</label>
+                                                                            @foreach ($bensinOptions as $layanan)
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input"
                                                                                         type="checkbox"
@@ -170,24 +192,55 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="mb-3">
-                                                                            <label for="parts"
-                                                                                class="form-label">Sparepart</label>
-                                                                            @foreach ($spareparts as $sparepart)
+                                                                            <label for="parts" class="form-label">Mobil
+                                                                                Diesel</label>
+                                                                            @foreach ($dieselOptions as $diesel)
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input"
                                                                                         type="checkbox"
-                                                                                        value='{"harga": "{{ $sparepart->harga }}", "waktu": "{{ $sparepart->waktu }}", "nama": "{{ $sparepart->nama }}" }'
-                                                                                        id="check{{ $sparepart->kode }}"
-                                                                                        name="parts[]">
+                                                                                        value='{"harga": "{{ $diesel->harga }}", "waktu": "{{ $diesel->waktu }}", "nama": "{{ $diesel->nama }}" }'
+                                                                                        id="check{{ $diesel->kode }}"
+                                                                                        name="service[]">
                                                                                     <label class="form-check-label"
-                                                                                        for="check{{ $sparepart->kode }}">{{ $sparepart->nama }}</label>
+                                                                                        for="check{{ $diesel->kode }}">{{ $diesel->nama }}</label>
                                                                                 </div>
                                                                             @endforeach
-                                                                            <!-- Tambahkan checkbox sparepart lainnya di sini -->
+                                                                            <!-- Tambahkan checkbox diesel lainnya di sini -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                {{-- modifikasi FIRDA --}}
+                                                                <div class="my-3 row">
+                                                                    <!-- Kolom Service Tambahan -->
+                                                                    <div class="col-md-6">
+                                                                        <label for="serviceTambahan"
+                                                                            class="form-label">Service Tambahan</label>
+                                                                        <textarea class="form-control" id="layanan_tambahan" name="layanan_tambahan" rows="3"></textarea>
+                                                                    </div>
 
+                                                                    <!-- Kolom Biaya Tambahan -->
+                                                                    <div class="col-md-6">
+                                                                        <label for="biayaTambahan"
+                                                                            class="form-label">Biaya Tambahan</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="biaya_tambahan" name="biaya_tambahan"
+                                                                            placeholder="Biaya Tambahan">
+                                                                    </div>
+
+                                                                    <!-- Kolom Service Cover (Checkbox) -->
+                                                                    <div class="col-md-6 my-2">
+                                                                        <label for="serviceCover"
+                                                                            class="form-label mx-2">Service
+                                                                            Cover</label>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" id="serviceCoverCheckbox"
+                                                                                name="serviceCover" value="active">
+                                                                            <label class="form-check-label"
+                                                                                for="serviceCoverCheckbox">Active</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="mb-3">
                                                                     {{-- <label for="hours" class="form-label">Jam Kerja</label> --}}
                                                                     <input type="hidden" class="form-control"
@@ -203,7 +256,8 @@
                                                                 </h3>
                                                             </div>
                                                             <div class="mt-4">
-                                                                <h3>Estimasi Waktu: <span id="estimatedTime">0</span> Menit
+                                                                <h3>Estimasi Waktu: <span id="estimatedTime">0</span>
+                                                                    Menit
                                                                 </h3>
                                                             </div>
                                                             <input type="hidden" name="estimatedCost"
@@ -236,75 +290,100 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {{-- <script>
+        // Simulasi perhitungan estimasi biaya
+        const form = document.querySelector('form');
+        const estimatedCostSpan = document.getElementById('estimatedCost');
+        const estimatedTimeSpan = document.getElementById('estimatedTime');
+        const serviceCoverCheckbox = document.getElementById('serviceCoverCheckbox'); // Tambahkan ID ke checkbox Service Cover
+    
+        function edit() {
+            // Ambil formulir dengan ID "woForm" dan submitkan
+            const woForm = document.getElementById('woForm');
+            woForm.submit();
+        }
+    
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const selectedServices = document.querySelectorAll('input[name="service[]"]:checked');
+    
+            let totalCostForServices = 0;
+            let totalWaktuForServices = 0;
+    
+            selectedServices.forEach(checkbox => {
+                const data = JSON.parse(checkbox.value);
+                totalCostForServices += parseFloat(data.harga);
+                totalWaktuForServices += parseInt(data.waktu.split(':')[0]) * 60 + parseInt(data.waktu.split(':')[1]);
+            });
+    
+            let totalCost = totalCostForServices;
+            let totalAllwaktu = totalWaktuForServices;
+    
+            // Modifikasi perhitungan totalCost berdasarkan status Service Cover checkbox
+            if (serviceCoverCheckbox.checked) {
+                totalCost = 0; // Jika Service Cover dicentang, totalCost menjadi 0
+            }
+    
+            estimatedCostSpan.textContent = totalCost.toLocaleString('id-ID');
+            estimatedTimeSpan.textContent = totalAllwaktu;
+            document.getElementById('estimatedCosts').value = totalCost;
+            document.getElementById('estimatedTimes').value = totalAllwaktu;
+        });
+    </script> --}}
+
+    {{-- modify FIRDA --}}
     <script>
         // Simulasi perhitungan estimasi biaya
         const form = document.querySelector('form');
         const estimatedCostSpan = document.getElementById('estimatedCost');
         const estimatedTimeSpan = document.getElementById('estimatedTime');
+        const serviceCoverCheckbox = document.getElementById('serviceCoverCheckbox');
+        const biayaTambahanInput = document.getElementById('biaya_tambahan'); // Tambahkan ID ke input biaya tambahan
 
         function edit() {
             // Ambil formulir dengan ID "woForm" dan submitkan
             const woForm = document.getElementById('woForm');
             woForm.submit();
         }
+
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Contoh perhitungan estimasi biaya (hanya simulasi)
-            // const selectedService = JSON.parse(document.getElementById('service').value);
-            // const hargaService = parseFloat(selectedService.harga);
-            // const waktuService =  parseInt(selectedService.waktu.split(':')[0]) * 60 + parseInt(selectedService.waktu.split(':')[1]);
-
-            // const selectedServiceData = JSON.parse(selectedService); 
-            // const hargaService = parseFloat(selectedServiceData.harga); 
-            // $selectedService = json_decode($_POST['service']); // Mendekode JSON menjadi objek PHP
-            // $hargaService = floatval($selectedService->harga);
-
-            const selectedParts = document.querySelectorAll('input[name="parts[]"]:checked');
             const selectedServices = document.querySelectorAll('input[name="service[]"]:checked');
-            // const hoursOfWork = parseFloat(document.getElementById('hours').value);
 
             let totalCostForServices = 0;
             let totalWaktuForServices = 0;
+
             selectedServices.forEach(checkbox => {
                 const data = JSON.parse(checkbox.value);
                 totalCostForServices += parseFloat(data.harga);
                 totalWaktuForServices += parseInt(data.waktu.split(':')[0]) * 60 + parseInt(data.waktu
                     .split(':')[1]);
             });
-            let totalCostForParts = 0;
-            let totalWaktuForParts = 0;
-            selectedParts.forEach(checkbox => {
-                const data = JSON.parse(checkbox.value);
-                totalCostForParts += parseFloat(data.harga);
-                totalWaktuForParts += parseInt(data.waktu.split(':')[0]) * 60 + parseInt(data.waktu.split(
-                    ':')[1]);
-            });
-            totalAllwaktu = totalWaktuForParts + totalWaktuForServices
-            const totalWaktuInJam = totalAllwaktu / 60;
 
+            let totalCost = totalCostForServices;
+            let totalAllwaktu = totalWaktuForServices;
 
+            // Modifikasi perhitungan totalCost berdasarkan status Service Cover checkbox
+            if (serviceCoverCheckbox.checked) {
+                totalCost = 0;
+            }
 
+            // Tambahkan biaya tambahan ke totalCost
+            if (biayaTambahanInput.value) {
+                totalCost += parseFloat(biayaTambahanInput.value);
+            }
 
-            const baseCost = 50000; // Biaya dasar
-            const costPerService = {
-                1: 20000,
-                2: 30000,
-                3: 40000
-            }; // Biaya tambahan berdasarkan jenis layanan
-
-            const costPerPart = 10000; // Biaya tambahan per sparepart
-            const hourlyRate = 15000; // Biaya per jam kerja
-
-            // const totalCost = baseCost + (costPerService[selectedService] || 0) + (selectedParts * costPerPart) + (hoursOfWork * hourlyRate);
-            const totalCost = (totalCostForServices + totalCostForParts);
-            // const totalCost = totalWaktuInJam;
             estimatedCostSpan.textContent = totalCost.toLocaleString('id-ID');
             estimatedTimeSpan.textContent = totalAllwaktu;
             document.getElementById('estimatedCosts').value = totalCost;
             document.getElementById('estimatedTimes').value = totalAllwaktu;
         });
     </script>
+
+
     <script>
         document.getElementById("no_tlp_pic").addEventListener("input", function() {
             let input = this.value;
@@ -362,7 +441,11 @@
                         document.getElementById("nama_customer").value = data.pelanggan.nama;
                         document.getElementById("alamat").value = data.pelanggan.alamat;
                         document.getElementById("no_tlp_pic").value = data.pelanggan.no_telp;
+                        document.getElementById("no_rangka").value = data.pelanggan.no_rangka;
 
+                        document.getElementById("service_type").value = data.service ? data.service
+                            .service_type : '';
+                        document.getElementById("keluhan").value = data.service ? data.service.keluhan : '';
                         // Isi elemen input "tgl_booking" dengan tgl_booking_terbaru
                         document.getElementById("tanggal_mulai").value = data.tgl_booking_terbaru;
                     } else {

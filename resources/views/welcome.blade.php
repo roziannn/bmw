@@ -116,18 +116,27 @@
                         src="/startbootstrap-grayscale-master/dist/assets/img/bg-masthead.jpg" alt="..." /></div>
                 <div class="col-xl-6 col-lg-6">
                     <div class="featured-text text-center text-lg-left">
-                        <div class="col-md-6">
-                            <p><a href="#new-book">Booking baru</a></p>
-                            <button type="button" class="btn-sm btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Member BMW lama
-                            </button>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <a href="#new-book" class="btn btn-primary btn-sm btn-block">New Customer</a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button type="button" class="btn btn-warning btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Old Customer
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button type="button" class="btn btn-info btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Walk-in Customer
+                                </button>
+                            </div>
+                        
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Member Lama</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Old Customer</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -139,17 +148,15 @@
                                                         placeholder="Police Number" name="no_polisi"
                                                         aria-label="plat_nomor" aria-describedby="addon-wrapping">
                                                 </div>
-
+                                                <p>Service type</p>
                                                 <select class="form-select form-select-lg mb-3"
-                                                    aria-label=".form-select-lg example" name="jenis_mobil">
+                                                    aria-label=".form-select-lg example" name="service_type"
+                                                    id="service_type">
                                                     <option selected>Select Service Type</option>
-                                                    <option value="BMW SPORT">Ganti oli</option>
-                                                    <option value="Seri 2">Ganti minyak rem</option>
-                                                    <option value="Seri 3">Ganti filter udara</option>
-                                                    <option value="X1">Ganti filter AC</option>
-                                                    <option value="X2">Pengecekan kendaraan</option>
+                                                    <option value="Service Rutin">Service Rutin</option>
                                                 </select>
-
+                                                <textarea class="form-control mb-3" name="keluhan" id="keluhan" cols="2" rows="3"
+                                                    placeholder="*keluhan optional..."></textarea>
                                                 <div class="input-group input-group-lg flex-nowrap mb-2">
                                                     <input type="date" class="form-control"
                                                         placeholder="tanggal Booking" aria-label="tanggal_booking"
@@ -182,6 +189,7 @@
                                 <input type="text" class="form-control" placeholder="Address" aria-label="alamat"
                                     name="alamat" aria-describedby="addon-wrapping">
                             </div>
+
                             <div class="input-group input-group-lg flex-nowrap mb-2">
                                 <input type="number" class="form-control" placeholder="Phone Number"
                                     aria-label="no_telp" name="no_telp" aria-describedby="addon-wrapping">
@@ -204,6 +212,19 @@
                                 <option value="X6">X6</option>
                                 <option value="X7">X7</option>
                             </select>
+                            <div class="input-group input-group-lg flex-nowrap mb-2">
+                                <input type="text" class="form-control" placeholder="Chassis Number"
+                                    name="no_rangka" aria-label="no_rangka" aria-describedby="addon-wrapping">
+                            </div>
+
+                            <p>Service type</p>
+                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                name="service_type" id="service_type">
+                                <option selected>Select Service Type</option>
+                                <option value="Service Rutin">Service Rutin</option>
+                            </select>
+                            <textarea class="form-control mb-3" name="keluhan" id="keluhan" cols="2" rows="3"
+                                placeholder="*keluhan optional..."></textarea>
 
                             <div class="input-group input-group-lg flex-nowrap mb-2">
                                 <input type="date" class="form-control" placeholder="tanggal Booking"

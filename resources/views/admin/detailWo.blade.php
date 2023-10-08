@@ -152,10 +152,10 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="parts" class="form-label">Sparepart</label>
+                {{-- <label for="parts" class="form-label">Sparepart</label>
                 <div class="form-check">
                     <label class="form-check-label" for="">{{ $sparepartString }}</label>
-                </div>
+                </div> --}}
                 <!-- Tambahkan checkbox sparepart lainnya di sini -->
             </div>
             <!-- <div class="mb-3">

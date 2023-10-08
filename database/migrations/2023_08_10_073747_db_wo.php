@@ -22,9 +22,12 @@ class DbWo extends Migration
             $table->time('waktu_estimasi_selesai')->nullable();
             $table->date('tanggal_selesai')->nullable();
             $table->string('no_polisi');
+            //modifikasi FIRDA
             $table->json('sparepart')->nullable();
             $table->json('layanan')->nullable();
+            $table->string('layanan_tambahan')->nullable();
             $table->unsignedBigInteger('biaya')->nullable();
+            $table->unsignedBigInteger('biaya_tambahan')->nullable();
             $table->unsignedBigInteger('id_teknisi')->nullable();
             $table->foreign('no_polisi')->references('no_polisi')->on('db_pelanggan')->onDelete('cascade');
             $table->unsignedBigInteger('service_advisor');

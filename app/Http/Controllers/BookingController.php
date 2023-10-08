@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PelangganModel;
 use App\Models\BookingModel;
 
+
 class BookingController extends Controller
 {
 
@@ -15,7 +16,8 @@ class BookingController extends Controller
         $request->validate([
             'no_polisi' => 'required|exists:db_pelanggan,no_polisi', // Memastikan nomor_member ada dalam tabel pelanggan
             'tgl_booking' => 'required|date',
-            // 'jenis_layanan' => 'required',
+            'service_type' => 'required',
+            'keluhan' => 'required',
         ]);
 
         // Cari pelanggan berdasarkan nomor_member
@@ -25,12 +27,14 @@ class BookingController extends Controller
         $booking = new BookingModel();
         $booking->no_polisi = $request->input('no_polisi'); // Menyimpan nomor  di booking
         $booking->tgl_booking = $request->input('tgl_booking');
+        $booking->service_type = $request->input('service_type'); // Menyimpan service type dari request
+        $booking->keluhan = $request->input('keluhan'); // Menyimpan keluhan dari request
         // $booking->jenis_layanan = $request->input('jenis_layanan');
-        
+
         $pelanggan->bookings()->save($booking); // Mengaitkan booking dengan pelanggan
+
 
         // Berikan umpan balik kepada pengguna
         return back();
     }
-
 }

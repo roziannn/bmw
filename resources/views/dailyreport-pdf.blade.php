@@ -43,8 +43,6 @@ text-decoration: underline;">Daily Report BMW TEBET <br> {{$date}}.</p>
                         <th>No Rangka</th>
                         <th>Jenis Layanan</th>
                         <th>Harga Layanan</th>
-                        <th>Jenis Sparepart</th>
-                        <th>Harga Sparepart</th>
                         <th>Total Harga</th>
                     </tr>
                 </thead>
@@ -69,23 +67,23 @@ text-decoration: underline;">Daily Report BMW TEBET <br> {{$date}}.</p>
                             @endforeach
                         </td>
                         
-                        <td style="color: black;min-width: 100px;">
+                        {{-- <td style="color: black;min-width: 100px;">
                             @foreach($item['sparepart'] as $sparepart)
                                 -{{ $sparepart }}<br>
                             @endforeach
-                        </td>
-                        <td style="color: black;min-width: 100px;">
+                        </td> --}}
+                        {{-- <td style="color: black;min-width: 100px;">
                             @foreach($item['sparepartHarga'] as $sparepartHarga)
                                 {{ $sparepartHarga }}<br>
                             @endforeach
-                        </td>
+                        </td> --}}
                         <td>{{$item['totalHarga']}}</td>
                     </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                         <tr>
-                            <td colspan="11" style="text-align: center;"><strong>Total Pemasukan per Tanggal : {{$date}}</strong></td>
+                            <td colspan="9" style="text-align: center;"><strong>Total Pemasukan per Tanggal : {{$date}}</strong></td>
                             <td colspan="2">{{$hargaPerhari}}</td>
                         </tr>
                 </tfoot>

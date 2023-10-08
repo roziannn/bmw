@@ -56,6 +56,7 @@ Route::post('/kerjakan/{id}', [ServiceController::class, 'kerjakanAPI'])->name('
 Route::post('/pengerjaan/{id}', [ServiceController::class, 'pengerjaanAPI'])->name('pengerjaanAPI');
 Route::get('/updateDone/{id}', [ServiceController::class, 'updateDone'])->name('updateDone');
 Route::get('/updatePembayaran/{id}', [ServiceController::class, 'updatePembayaran'])->name('updatePembayaran');
+
 Route::get('/teknisi/mengerjakan/{id}',[ServiceController::class, 'teknisiWO'])->name('teknisiWO');
 Route::get('/get-payment-data', [ServiceController::class,'getPaymentData'])->name('getPaymentData');
 Route::get('/cetakSA/{tgl}', [ServiceController::class,'cetakSA'])->name('cetakSA');
