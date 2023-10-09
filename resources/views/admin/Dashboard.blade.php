@@ -912,7 +912,7 @@
                     modalNoPolElement.textContent = "No Polisi: " + data.NomorPolisi;
 
                     const layanan = data.JenisLayanan.join(', ');
-                    modalNoPS1Element.textContent = `Layanan : ${data.JenisLayanan}`;
+                    modalNoPS1Element.textContent = `Layanan : ${data.JenisLayanan}` + `, ` + `${data.LayananTambahan}`;
                     modalEsW1Element.textContent = `Estimasi Waktu : ${data.EstimasiWaktu} menit`;
 
                     console.log(layanan);
