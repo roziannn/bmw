@@ -32,7 +32,7 @@ Route::get('/pelanggan/{id}', function ($id) {
     $tglBookingTerbaru = BookingModel::where('no_polisi', $id)
         ->orderBy('tgl_booking', 'desc')
         ->first();
-        $service = BookingModel::where('no_polisi', $id)->orderBy('tgl_booking', 'desc')
+    $service = BookingModel::where('no_polisi', $id)->orderBy('tgl_booking', 'desc')
         ->first();
 
     return [
@@ -42,5 +42,18 @@ Route::get('/pelanggan/{id}', function ($id) {
     ];
 });
 
+// Route::get('/pelanggan/{id}', function ($id) {
+//     $pelanggan = PelangganModel::where('no_polisi', $id)->first();
 
+//     // Ambil data pemesanan terbaru berdasarkan nomor polisi
+//     $service = BookingModel::where('no_polisi', $id)
+//         ->orderBy('tgl_booking', 'desc')
+//         ->first();
+
+//     return [
+//         'pelanggan' => $pelanggan,
+//         'service' => $service,
+//         'tgl_booking_terbaru' => $service ? $service->tgl_booking : null,
+//     ];
+// });
 

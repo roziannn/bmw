@@ -16,14 +16,12 @@ class BookingController extends Controller
         $request->validate([
             'no_polisi' => 'required|exists:db_pelanggan,no_polisi', // Memastikan nomor_member ada dalam tabel pelanggan
             'tgl_booking' => 'required|date',
-            'service_type' => 'required',
-            'keluhan' => 'required',
+            // 'service_type' => 'required',
         ]);
 
         // Cari pelanggan berdasarkan nomor_member
         $pelanggan = PelangganModel::where('no_polisi', $request->input('no_polisi'))->first();
 
-        // Simpan data booking ke dalam database dengan mengaitkannya dengan pelanggan
         $booking = new BookingModel();
         $booking->no_polisi = $request->input('no_polisi'); // Menyimpan nomor  di booking
         $booking->tgl_booking = $request->input('tgl_booking');
@@ -34,7 +32,10 @@ class BookingController extends Controller
         $pelanggan->bookings()->save($booking); // Mengaitkan booking dengan pelanggan
 
 
-        // Berikan umpan balik kepada pengguna
-        return back();
+        $noPolisi = $request->no_polisi;
+        $checkNo = PelangganModel::where('no_polisi',  $noPolisi)->first();
+        $nopol = $noPolisi;
+
+        return redirect()->route('indexOnBooking', compact('nopol'));
     }
 }

@@ -516,8 +516,8 @@
                                     <p id="modalNoWo">No Wo : </p>
                                     <p id="modalNoRangka">No Rangka :</p>
                                     <p id="modalJenisKendaraan">Jenis Kendaraan:</p>
-                                    <p id="modalJL">Jenis Layanan :</p>
-                                    <p id="modalNoPS">Layanan :</p>
+                                    <p id="modalJL">Layanan :</p>
+                                    {{-- <p id="modalNoPS">Pengerjaan :</p> --}}
                                     <p id="modalEsW">Estimasi Waktu :</p>
                                     <div class="mb-1">
                                         <label for="listTechnicians" class="form-label"
@@ -707,7 +707,7 @@
             const modalNoRangkaElement = document.getElementById("modalNoRangka");
             const modalJenisKendaraanElement = document.getElementById("modalJenisKendaraan");
             const modalJLElement = document.getElementById("modalJL");
-            const modalNoPSElement = document.getElementById("modalNoPS");
+            // const modalNoPSElement = document.getElementById("modalNoPS");
             const modalEsWElement = document.getElementById("modalEsW");
 
             dropdowns.forEach(dropdown => {
@@ -722,9 +722,10 @@
                             modalNoRangkaElement.textContent = `No Rangka : ${data.NoRangka}`;
                             modalJenisKendaraanElement.textContent =
                                 `Jenis Kendaraan : ${data.JenisKendaraan}`;
-                            modalJLElement.textContent = `Jenis Layanan : ${data.JenisLayanan}`;
-                            modalNoPSElement.textContent =
-                                `Layanan : ${data.SparePart}`;
+                            modalJLElement.textContent = `Layanan : ${data.JenisLayanan}` + `, `+ `${data.LayananTambahan}`;
+                            
+                            // modalNoPSElement.textContent =
+                            //     `Pengerjaan : ${data.layanan}`;
                             modalEsWElement.textContent =
                                 `Estimasi Waktu : ${data.EstimasiWaktu} menit`;
 
@@ -732,17 +733,17 @@
                             const submitButton = document.getElementById('submitButton');
 
                             maintenanceForm.innerHTML = '';
-                            data.SparePart.forEach(sparepart => {
+                            data.Layanan.forEach(layanan => {
                                 const label = document.createElement('label');
                                 const input = document.createElement('input');
                                 input.type = 'radio';
                                 input.name = 'maintenance';
                                 input.className = 'maintenance-option';
-                                input.value = sparepart;
+                                input.value = layanan;
 
                                 label.appendChild(input);
                                 label.appendChild(document.createTextNode(
-                                    ` ${sparepart}`));
+                                    ` ${layanan}`));
 
                                 maintenanceForm.appendChild(label);
                                 label.classList.add("white-text");
@@ -765,11 +766,6 @@
                             $('#taskModal').modal('show');
                         })
                         .catch(error => console.error('Terjadi kesalahan:', error));
-
-                    // Lakukan pemanggilan API JSON atau data lainnya untuk mendapatkan detail task
-                    // Kemudian isi elemen modal sesuai dengan data yang didapatkan
-
-                    // Tampilkan modal
                     $('#taskModal').modal('show');
                 });
             });
@@ -920,9 +916,16 @@
                     modalEsW1Element.textContent = `Estimasi Waktu : ${data.EstimasiWaktu} menit`;
 
                     console.log(layanan);
+
+                    //this is modify by f
+                    const jenisLayanan = data.JenisLayanan;
+                    const layananTambahan = data.LayananTambahan;
+                    const allLayanan = jenisLayanan.concat(layananTambahan);
+                    //---
                     const maintenanceForm = document.getElementById('maintenanceForm');
                     maintenanceForm.innerHTML = '';
-                    data.JenisLayanan.forEach(layanan => {
+                    //modify to all
+                    allLayanan.forEach(layanan => {
                         const label = document.createElement('label');
                         const input = document.createElement('input');
                         input.type = 'radio';
@@ -938,6 +941,7 @@
                         maintenanceForm.appendChild(label);
                         maintenanceForm.appendChild(document.createElement('br'));
                     });
+
                     const radioButtons = maintenanceForm.querySelectorAll('.maintenance-option');
 
                     radioButtons.forEach(radioButton => {

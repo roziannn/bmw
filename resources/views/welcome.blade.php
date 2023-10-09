@@ -121,18 +121,162 @@
                                 <a href="#new-book" class="btn btn-primary btn-sm btn-block">New Customer</a>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <button type="button" class="btn btn-warning btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-warning btn-sm btn-block" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
                                     Old Customer
                                 </button>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <button type="button" class="btn btn-info btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-info btn-sm btn-block" data-bs-toggle="modal"
+                                    data-bs-target="#walkInModal">
                                     Walk-in Customer
                                 </button>
                             </div>
-                        
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="walkInModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Walk-In Customer</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-check mb-3" style="float: left; width: 48%;">
+                                                <input class="form-check-input" type="radio" name="customerType"
+                                                    id="newCustomerRadio" value="new">
+                                                <label class="form-check-label" for="newCustomerRadio">
+                                                    New Customer
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-3" style="float: right; width: 48%;">
+                                                <input class="form-check-input" type="radio" name="customerType"
+                                                    id="oldCustomerRadio" value="old">
+                                                <label class="form-check-label" for="oldCustomerRadio">
+                                                    Old Customer
+                                                </label>
+                                            </div>
+
+                                            <div id="newCustomerForm" style="display: none;">
+                                                <form action="/input/customer/booking" method="post">
+                                                    @csrf
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2 mt-2">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Email" aria-label="email" name="email"
+                                                            aria-describedby="addon-wrapping">
+                                                    </div>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Fullname" aria-label="nama" name="nama"
+                                                            aria-describedby="addon-wrapping">
+                                                    </div>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Address" aria-label="alamat" name="alamat"
+                                                            aria-describedby="addon-wrapping">
+                                                    </div>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="date" name="tgl_booking" class="form-control"
+                                                            id="tanggal_newCust" value="" required hidden>
+                                                    </div>
+                                                    <script>
+                                                        document.addEventListener("DOMContentLoaded", function() {
+                                                            var today = new Date().toISOString().split('T')[0];
+                                                            document.getElementById("tanggal_newCust").setAttribute("value", today);
+                                                        });
+                                                    </script>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Phone Number" aria-label="no_telp"
+                                                            name="no_telp" aria-describedby="addon-wrapping">
+                                                    </div>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Police Number" name="no_polisi"
+                                                            aria-label="plat_nomor" aria-describedby="addon-wrapping">
+                                                    </div>
+                                                    <select class="form-select form-select-lg mb-3"
+                                                        aria-label=".form-select-lg example" name="jenis_mobil">
+                                                        <option selected>Select Car Model</option>
+                                                        <option value="BMW SPORT">BMW SPORT</option>
+                                                        <option value="Seri 2">Seri 2</option>
+                                                        <option value="Seri 3">Seri 3</option>
+                                                        <option value="X1">X1</option>
+                                                        <option value="X2">X2</option>
+                                                        <option value="X3">X3</option>
+                                                        <option value="X4">X4</option>
+                                                        <option value="X5">X5</option>
+                                                        <option value="X6">X6</option>
+                                                        <option value="X7">X7</option>
+                                                    </select>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Chassis Number" name="no_rangka"
+                                                            aria-label="no_rangka" aria-describedby="addon-wrapping">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div id="oldCustomerForm" style="display: none;">
+                                                <!-- Form for Old Customer -->
+                                                <form  action="/booking" method="post">
+                                                    @csrf
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Police Number" name="no_polisi"
+                                                            aria-label="plat_nomor" aria-describedby="addon-wrapping">
+                                                    </div>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="date" name="tgl_booking" class="form-control"
+                                                            id="tanggal_oldCust" value="" required hidden>
+                                                    </div>
+                                                    <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                        <input type="text" name="service_type" class="form-control"
+                                                            id="service_type" value=" " required hidden>
+                                                    </div>
+                                                    <script>
+                                                        document.addEventListener("DOMContentLoaded", function() {
+                                                            var today = new Date().toISOString().split('T')[0];
+                                                            document.getElementById("tanggal_oldCust").setAttribute("value", today);
+                                                        });
+                                                    </script>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                // JavaScript to handle showing/hiding the forms based on radio button selection
+                                document.querySelector('#newCustomerRadio').addEventListener('change', function() {
+                                    document.querySelector('#newCustomerForm').style.display = 'block';
+                                    document.querySelector('#oldCustomerForm').style.display = 'none';
+                                });
+
+                                document.querySelector('#oldCustomerRadio').addEventListener('change', function() {
+                                    document.querySelector('#newCustomerForm').style.display = 'none';
+                                    document.querySelector('#oldCustomerForm').style.display = 'block';
+                                });
+                            </script>
+
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -158,8 +302,7 @@
                                                 <textarea class="form-control mb-3" name="keluhan" id="keluhan" cols="2" rows="3"
                                                     placeholder="*keluhan optional..."></textarea>
                                                 <div class="input-group input-group-lg flex-nowrap mb-2">
-                                                    <input type="date" class="form-control"
-                                                        placeholder="tanggal Booking" aria-label="tanggal_booking"
+                                                    <input type="date" class="form-control" aria-label="tgl_booking"
                                                         aria-describedby="addon-wrapping" name="tgl_booking"
                                                         min="<?php echo date('Y-m-d'); ?>">
                                                 </div>
