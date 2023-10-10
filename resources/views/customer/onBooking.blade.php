@@ -266,7 +266,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-auto">
+                                {{-- <div class="col-auto">
                                     <div class="fw-bold font-size-24">
                                         <i class="bx bxl-dropbox icon"></i> Sparepart:
                                         @if ($wo && $wo->sparepart !== null)
@@ -275,7 +275,7 @@
                                             Tidak ada penambahan sparepart
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-auto">
                                     <div class="fw-bold font-size-24">
                                         <i class="bx bx-stats icon"></i> Status:

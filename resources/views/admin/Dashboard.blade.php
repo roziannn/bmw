@@ -447,7 +447,7 @@
                 <p id="modalEsW1">Estimasi Waktu :</p>
                 <div style="margin-top: 10px">
                     <label for="listTechnicians" class="form-label"
-                        style="color: rgb(0, 0, 0); font-weight: bold;">Sparepart Pengerjaan: </label>
+                        style="color: rgb(0, 0, 0); font-weight: bold;">Pengerjaan: </label>
                     <div id="maintenanceForm">
                     </div>
                     <button type="submit" style="font-weight: bold; border-radius: 10px; "

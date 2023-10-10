@@ -104,19 +104,10 @@ class ServiceController extends Controller
         $jam = (int)$waktuArray[0];
         $menit = (int)$waktuArray[1];
         $totalMenitEstimasi = ($jam * 60) + $menit;
-        // $layananArray = json_decode($dataWO->layanan, true); // Mengubah JSON menjadi array
-
-
-        // $layananNames = [];
-        // foreach ($layananArray as $layananItem) {
-        //     $layananNames[] = $layananItem['nama'];
-        // }
-
-        // $layananString = implode(', ', $layananNames);
-
+      
         $dbbooking = BookingModel::where('no_wo', $dataWO->no_wo)
             ->where('status', '<>', 'Done')
-            ->where('no_polisi', $dataWO->no_polisi) // Ganti $nomor_polisi dengan nilai nomor polisi yang diinginkan
+            ->where('no_polisi', $dataWO->no_polisi) 
             ->first();
         $pengerjaan = "";
         if ($dbbooking !== null) {
@@ -144,8 +135,6 @@ class ServiceController extends Controller
         }
 
         $layananNamesString = implode(', ', $layananNames);
-
-
 
 
         $detail = [
@@ -252,7 +241,7 @@ class ServiceController extends Controller
 
         $sparepartsArray = json_decode($workingOrder->sparepart); // Ubah JSON string menjadi array
 
-        $sparepartsFormatted = implode(', ', $sparepartsArray);
+        // $sparepartsFormatted = implode(', ', $sparepartsArray);
 
         $dataArray = json_decode($workingOrder->layanan, true);
         $names = [];
@@ -1051,25 +1040,20 @@ class ServiceController extends Controller
     //modify FIRDA
     public function getPaymentData(Request $request)
     {
-        // Ambil tanggal dari parameter query
+    
         $selectedDate = $request->query('date');
 
-        // Lakukan query untuk mengambil data sesuai tanggal
         $paymentData = WorkingOrderModel::whereDate('tanggal_mulai', $selectedDate)->get();
-
-        // Lakukan query untuk mengambil data pelanggan berdasarkan nomor polisi
         $noPlatArray = $paymentData->pluck('no_polisi')->toArray();
         $pelangganData = PelangganModel::whereIn('no_polisi', $noPlatArray)->get();
 
-        // Kembalikan data dalam format JSON
+       
         $mergedData = [];
         $totalHarga = 0;
 
         foreach ($paymentData as $payment) {
-            // Temukan pelanggan yang sesuai dengan nomor polisi dari order
             $pelanggan = $pelangganData->firstWhere('no_polisi', $payment->no_polisi);
 
-            // Decode data layanan dari JSON
             $dataArray = json_decode($payment->layanan, true);
 
             $names = [];
