@@ -371,7 +371,7 @@ body {
           <p><strong>Address:</strong> <span id="modal-address"></span></p>
             <hr class="horizontal-line">
             <p><strong>Jasa Layanan:</strong> <span id="modal-service"></span></p>
-            <p><strong>Additional Sparepart:</strong> <span id="modal-sparepart"></span></p>
+            {{-- <p><strong>Additional Sparepart:</strong> <span id="modal-sparepart"></span></p> --}}
           <p><strong>Total Price:</strong> <span id="modal-price"></span></p>
           <button id="printButton">Print Invoice</button>
           <div class="invoice-container" id="invoiceContainer">
