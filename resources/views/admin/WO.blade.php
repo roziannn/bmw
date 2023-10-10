@@ -206,11 +206,11 @@
                             <p style="color: black;">Harga Layanan:</p>
                         </div>
                         ${item.layanan.map((jenis, i) => `
-                                                                                                <div style="color: black; display: flex; justify-content: space-between; font-size: 16px;">
-                                                                                                    <p style="color: black;"><span>${jenis}</span></p>
-                                                                                                    <p style="color: black;"><span>${item.layananHarga[i]}</span></p>
-                                                                                                </div>
-                                                                                            `).join('')}
+                                                                                                            <div style="color: black; display: flex; justify-content: space-between; font-size: 16px;">
+                                                                                                                <p style="color: black;"><span>${jenis}</span></p>
+                                                                                                                <p style="color: black;"><span>${item.layananHarga[i]}</span></p>
+                                                                                                            </div>
+                                                                                                        `).join('')}
                         <hr style="border-top: 1px solid black; margin: 10px 0;">
                         <div style="color: black; display: flex; justify-content: space-between; font-size: 16px;">
                             <p style="color: black;">Total Harga:</p>
@@ -222,20 +222,37 @@
                             container.innerHTML = templateHTML;
 
                             // Menghitung total harga per hari
+                            // const totalHargaPerHari = data.data.reduce((total, item) => {
+                            //     const totalLayanan = item.layananHarga.reduce((sum, harga) =>
+                            //         sum +
+                            //         parseFloat(harga), 0);
+                            //     return total + totalLayanan;
+                            // }, 0);
+
+                            function formatRupiah(angka) {
+                                var reverse = angka.toString().split('').reverse().join('');
+                                var ribuan = reverse.match(/\d{1,3}/g);
+                                var formatted = ribuan.join('.').split('').reverse().join('');
+                                return 'Rp. ' + formatted;
+                            }
+
                             const totalHargaPerHari = data.data.reduce((total, item) => {
                                 const totalLayanan = item.layananHarga.reduce((sum, harga) =>
-                                    sum +
-                                    parseFloat(harga), 0);
+                                    sum + parseFloat(harga.replace(/\D/g, '')), 0
+                                );
                                 return total + totalLayanan;
                             }, 0);
 
-                            // Menambahkan elemen total harga per hari
+                            const totalHargaPerHariRupiah = formatRupiah(
+                            totalHargaPerHari); //konversi rp
+
+                            // total harga per hari
                             const totalHargaPerHariElement = document.createElement('div');
                             totalHargaPerHariElement.style.color = 'black';
                             totalHargaPerHariElement.style.fontSize = '16px';
                             totalHargaPerHariElement.style.marginTop = '10px';
                             totalHargaPerHariElement.textContent =
-                                `Total Harga per Tanggal ${selectedDate} : ${totalHargaPerHari}`;
+                                `Total Harga per Tanggal ${selectedDate} : ${totalHargaPerHariRupiah}`;
                             container.appendChild(totalHargaPerHariElement);
                         });
 
@@ -290,7 +307,7 @@
                     {
                         data: 'export_pdf',
                         name: 'export_pdf',
-                        orderable: false, 
+                        orderable: false,
                         searchable: false,
                     }
                 ]

@@ -148,7 +148,7 @@
             <div class="mb-1">
             <label for="service" class="form-label">Jenis Layanan</label>
                 <div class="form-check">
-                    <label class="form-check-label" for="">{{ $layananString }}</label>
+                    <label class="form-check-label" for="">{{ $layananString }} <br>{{ $dataWo->layanan_tambahan }}</label>
                 </div>
             </div>
             <div class="mb-3">
