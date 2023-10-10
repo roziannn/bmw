@@ -117,7 +117,7 @@
                                 <th>Jenis Mobil</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Status</th>
-                                <th></th>
+                                <th>Action</th>
 
                             </thead>
                             <tbody>
@@ -206,11 +206,11 @@
                             <p style="color: black;">Harga Layanan:</p>
                         </div>
                         ${item.layanan.map((jenis, i) => `
-                                                <div style="color: black; display: flex; justify-content: space-between; font-size: 16px;">
-                                                    <p style="color: black;"><span>${jenis}</span></p>
-                                                    <p style="color: black;"><span>${item.layananHarga[i]}</span></p>
-                                                </div>
-                                            `).join('')}
+                                                                                                <div style="color: black; display: flex; justify-content: space-between; font-size: 16px;">
+                                                                                                    <p style="color: black;"><span>${jenis}</span></p>
+                                                                                                    <p style="color: black;"><span>${item.layananHarga[i]}</span></p>
+                                                                                                </div>
+                                                                                            `).join('')}
                         <hr style="border-top: 1px solid black; margin: 10px 0;">
                         <div style="color: black; display: flex; justify-content: space-between; font-size: 16px;">
                             <p style="color: black;">Total Harga:</p>
@@ -257,7 +257,6 @@
 
     <script>
         $(function() {
-
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -289,16 +288,13 @@
                         name: 'status'
                     },
                     {
-                        data: 'no_wo',
-                        name: 'action',
-                        render: function(data, type, full, meta) {
-                            return '<a href="/exportpdf/' + data +' " class="btn-sm btn-primary">Download</a>';
-                        }
-                    },
-
+                        data: 'export_pdf',
+                        name: 'export_pdf',
+                        orderable: false, 
+                        searchable: false,
+                    }
                 ]
             });
-
         });
     </script>
 @endsection

@@ -10,6 +10,7 @@ use App\Models\ForemanModel;
 use App\Models\LayananModel;
 use App\Models\TeknisiModel;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\PelangganModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\DataTables;
@@ -192,16 +193,16 @@ class ServiceController extends Controller
 
 
         // dd(dataTeknisi);
-        $layananData = json_decode($dataWO->layanan); 
+        $layananData = json_decode($dataWO->layanan);
 
-        $layananNames = []; 
+        $layananNames = [];
 
         foreach ($layananData as $layanan) {
-            $layananObj = json_decode($layanan); 
-            $layananNames[] = $layananObj->nama; 
+            $layananObj = json_decode($layanan);
+            $layananNames[] = $layananObj->nama;
         }
 
-        $pengerjaan = $dbbooking->pengerjaan; 
+        $pengerjaan = $dbbooking->pengerjaan;
 
         $firstKeyToRemove = array_search($pengerjaan, $layananNames);
 
@@ -223,7 +224,7 @@ class ServiceController extends Controller
             // 'SparePart' => json_decode($dataWO->sparepart),
             'EstimasiWaktu' => $totalMenitEstimasi
         ];
-        
+
         return response()->json($detail);
     }
 
@@ -786,12 +787,13 @@ class ServiceController extends Controller
                 ->addColumn('jenis_mobil', function ($data) {
                     return optional($data->pelanggan)->jenis_mobil;
                 })
-                ->rawColumns(['no_wo', 'pelanggan', 'jenis_mobil'])
+                ->addColumn('export_pdf', function ($data) {
+                    $exportLink = '<a href="/exportpdf-wo/' . $data->no_wo . '" style="text-decoration: none;">Download PDF</a>';
+                    return $exportLink;
+                })
+                ->rawColumns(['no_wo', 'pelanggan', 'jenis_mobil', 'export_pdf'])
                 ->make(true);
         }
-        // return  view('createWO', [
-        //     "title" => 'Create WO'
-        // ], compact('data'));
     }
 
     public function getPelanggan($id)
@@ -882,6 +884,71 @@ class ServiceController extends Controller
         $pdf = PDF::loadView('dailyreport-pdf', $data);
         $pdf->setPaper('A3', 'landscape');
         return $pdf->download('dataWo.pdf');
+    }
+
+    public function exportpdfWo($no_wo)
+    {
+
+        $woData = DB::table('db_wo')
+            ->join('db_booking', 'db_wo.no_wo', '=', 'db_booking.no_wo')
+            ->join('db_pelanggan', 'db_booking.no_polisi', '=', 'db_pelanggan.no_polisi')
+            ->where('db_wo.no_wo', $no_wo)
+            ->first();
+
+            $waktuMulai = explode(':', $woData->waktu_mulai);
+            $estimasiSelesai = explode(':', $woData->waktu_estimasi_selesai);
+            
+            $hour = $waktuMulai[0] + $estimasiSelesai[0];
+            $minute = $waktuMulai[1] + $estimasiSelesai[1];
+            $second = $waktuMulai[2] + $estimasiSelesai[2];
+            
+            // Menangani penambahan yang melebihi 60 untuk jam, menit, dan detik
+            if ($second >= 60) {
+                $second -= 60;
+                $minute += 1;
+            }
+            
+            if ($minute >= 60) {
+                $minute -= 60;
+                $hour += 1;
+            }
+            
+            $estimasiSelesaiString = sprintf('%02d:%02d:%02d', $hour, $minute, $second);
+            $woData->estimasi_selesai = $estimasiSelesaiString;
+
+        $pdfFileName = 'wo_' . $no_wo . '.pdf';
+
+        $dataArray = json_decode($woData->layanan, true);
+        $names = [];
+        $prices = [];
+        foreach ($dataArray as $item) {
+            $itemArray = json_decode($item, true); 
+            $names[] = $itemArray['nama'];
+
+            $formattedPrice = 'Rp. ' . number_format(floatval($itemArray['harga']), 0, ',', '.');
+            $prices[] = $formattedPrice;
+        }
+        $layananString = implode(', ', $names);
+        $hargaString = implode(', ', $prices);
+
+        $mergedData[] = [
+            'layanan' => $names,
+            'layananHarga' => $prices
+        ];
+
+        $data = [
+            'data' => $mergedData
+        ];
+
+        $pdf = PDF::loadView('woreport-pdf', ['woData' => $woData, 'data' => $data]);
+
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $pdfFileName . '"',
+        ];
+
+   
+        return response($pdf->output(), 200, $headers);
     }
 
     public function updateTeknisiInWo($id, Request $request)

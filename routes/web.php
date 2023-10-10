@@ -41,6 +41,7 @@ Route::get('/input/customer/booking', [ServiceController::class, 'inputCustomer'
 Route::get('/input/customer/booking', [ServiceController::class, 'inputCustomer'])->name('inputBooking');
 
 Route::get('/data/wo', [ServiceController::class, 'dataWO'])->name('data.wo')->middleware('auth');
+
 Route::get('/pelanggan/{id}', [ServiceController::class, 'getPelanggan'])->name('getPelanggan');
 
 Route::get('/wo/table', [ServiceController::class, 'woTable'])->name('woTable');
@@ -80,6 +81,11 @@ Route::get('/logout/kasir', [AuthController::class, 'logoutAdmin'])->name('logou
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 Route::get('/kasir', [AuthController::class, 'kasir'])->name('kasir');
 Route::get('/exportpdf/{tgl}', [ServiceController::class, 'exportpdf'])->name('exportpdf'); 
+
+//modify firda
+Route::get('/exportpdf-wo/{no_wo}', [ServiceController::class, 'exportpdfWo'])->name('exportpdfWo');
+// Route::get('/exportpdf-wo/{tgl}', [ServiceController::class, 'exportpdfWo'])->name('exportpdfWo');
+// // 
 
 
 
