@@ -25,6 +25,7 @@ class BookingController extends Controller
         $booking = new BookingModel();
         $booking->no_polisi = $request->input('no_polisi'); // Menyimpan nomor  di booking
         $booking->tgl_booking = $request->input('tgl_booking');
+        $booking->waktu_mulai = $request->input('waktu_mulai');
         $booking->service_type = $request->input('service_type'); // Menyimpan service type dari request
         $booking->keluhan = $request->input('keluhan'); // Menyimpan keluhan dari request
         // $booking->jenis_layanan = $request->input('jenis_layanan');

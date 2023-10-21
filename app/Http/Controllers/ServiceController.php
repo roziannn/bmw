@@ -88,6 +88,8 @@ class ServiceController extends Controller
         return view('customer.onBooking', compact('title', 'pelanggan', 'booking', 'wo', 'antrian', 'namaTeknisi'));
     }
 
+
+
     public function detailTASK($no_wo)
     {
         $dataWO = WorkingOrderModel::where('no_wo', $no_wo)->first();
@@ -104,10 +106,10 @@ class ServiceController extends Controller
         $jam = (int)$waktuArray[0];
         $menit = (int)$waktuArray[1];
         $totalMenitEstimasi = ($jam * 60) + $menit;
-      
+
         $dbbooking = BookingModel::where('no_wo', $dataWO->no_wo)
             ->where('status', '<>', 'Done')
-            ->where('no_polisi', $dataWO->no_polisi) 
+            ->where('no_polisi', $dataWO->no_polisi)
             ->first();
         $pengerjaan = "";
         if ($dbbooking !== null) {
@@ -142,9 +144,12 @@ class ServiceController extends Controller
             'NoRangka' => $dataPelanggan->no_rangka,
             'JenisKendaraan' => $dataPelanggan->jenis_mobil,
             'JenisLayanan' => $layananNames,
-            'LayananTambahan' => $dataWO->layanan_tambahan,
             'EstimasiWaktu' => $totalMenitEstimasi
         ];
+        //10/11/2023
+        if ($dataWO->layanan_tambahan !== null && $dataWO->layanan_tambahan !== '') {
+            $detail['LayananTambahan'] = $dataWO->layanan_tambahan;
+        }
 
         return response()->json($detail);
     }
@@ -153,8 +158,11 @@ class ServiceController extends Controller
     public function teknisiWO($id_teknisi)
     {
         $dataWO = WorkingOrderModel::where('id_teknisi', $id_teknisi)
-            ->where('status', '<>', 'Done')
-            ->first();
+        ->where(function ($query) {
+            $query->where('status', '<>', 'Done')
+                  ->where('status', '<>', 'Menunggu Pembayaran');
+        })
+        ->first();
 
         $dataPelanggan = PelangganModel::where('no_polisi', $dataWO->no_polisi)->first();
         $waktuArray = explode(':', $dataWO->waktu_estimasi_selesai);
@@ -172,8 +180,11 @@ class ServiceController extends Controller
         }
 
         $dbbooking = BookingModel::where('no_wo', $dataWO->no_wo)
-            ->where('status', '<>', 'Done')
-            ->where('no_polisi', $dataWO->no_polisi) // Ganti $nomor_polisi dengan nilai nomor polisi yang diinginkan
+            ->where(function ($query) {
+                $query->where('status', '<>', 'Done')
+                    ->where('status', '<>', 'Menunggu Pembayaran');
+            })
+            ->where('no_polisi', $dataWO->no_polisi)
             ->first();
         $pengerjaan = "";
         if ($dbbooking !== null) {
@@ -209,10 +220,14 @@ class ServiceController extends Controller
             'NoRangka' => $dataPelanggan->no_rangka,
             'JenisKendaraan' => $dataPelanggan->jenis_mobil,
             'JenisLayanan' => $layananNames,
-            'LayananTambahan' => $dataWO->layanan_tambahan,
+            //10/11/2023 10:41 am
+            // 'LayananTambahan' => $dataWO->layanan_tambahan ? : '',
             // 'SparePart' => json_decode($dataWO->sparepart),
             'EstimasiWaktu' => $totalMenitEstimasi
         ];
+        if ($dataWO->layanan_tambahan !== null && $dataWO->layanan_tambahan !== '') {
+            $detail['LayananTambahan'] = $dataWO->layanan_tambahan;
+        }
 
         return response()->json($detail);
     }
@@ -313,39 +328,6 @@ class ServiceController extends Controller
         return redirect()->back();
     }
 
-    // public function updateDone(Request $request, $id)
-    // {
-
-    //     $workingOrders = WorkingOrderModel::find($id);
-    //     $teknisi = TeknisiModel::find($workingOrders->id_teknisi);
-    //     if ($teknisi) {
-    //         $teknisi->status = 'available';
-    //         $teknisi->save();
-    //     }
-
-
-
-    //     $workingOrder = WorkingOrderModel::find($id);
-    //     $workingOrder->status = 'Done';
-    //     $workingOrder->id_teknisi = null;
-    //     $workingOrder->save();
-    //     $workingOrder = WorkingOrderModel::find($id);
-    //     $booking = BookingModel::where('no_wo', $workingOrder->no_wo)->first();
-    //     if ($booking !== null) {
-    //         $booking->status =  'Done';
-    //         $booking->pengerjaan = null;
-    //         $booking->save();
-    //     } else {
-    //     }
-
-    //     response()->json([
-    //         'status' => 'success',
-    //         'message' => 'Data berhasil diproses',
-    //     ]);
-
-    //     return redirect()->back();
-    // }
-
     //MODIFY FIRDA
     public function updateDone(Request $request, $id)
     {
@@ -378,36 +360,6 @@ class ServiceController extends Controller
     }
 
 
-    // public function updatePembayaran(Request $request, $id)
-    // {
-
-    //     $workingOrder = WorkingOrderModel::where('id_teknisi', $id)->first();
-
-    //     // Pastikan working order ditemukan
-    //     if ($workingOrder) {
-    //         // Ubah status working order menjadi "On Progress"
-    //         $workingOrder->status = "Menunggu Pembayaran";
-    //         $workingOrder->save();
-    //         $booking = BookingModel::where('no_polisi', $workingOrder->no_polisi)
-    //             ->where('no_wo', $workingOrder->no_wo)
-    //             ->first();
-
-    //         if ($booking) {
-    //             // Ubah status working order menjadi "On Progress"
-    //             $booking->status = "Menunggu Pembayaran";
-    //             $booking->pengerjaan = "";
-    //             $booking->save();
-    //         }
-
-    //         return response()->json(['message' => 'Status working order berhasil diubah.']);
-    //     } else {
-    //         return response()->json(['error' => 'Working order tidak ditemukan.'], 404);
-    //     }
-
-
-    //     return redirect()->back();
-    // }
-
     public function updatePembayaran(Request $request, $id)
     {
         $workingOrder = WorkingOrderModel::where('id_teknisi', $id)->first();
@@ -438,13 +390,20 @@ class ServiceController extends Controller
                 $booking->save();
             }
 
+            // Selanjutnya, pastikan teknisi tidak mendapatkan WO yang sama lagi jika statusnya "Menunggu Pembayaran"
+
+            // Misalnya, jika status working order adalah "Menunggu Pembayaran," jangan menugaskan pekerjaan baru
+            if ($workingOrder->status !== "Menunggu Pembayaran") {
+                // Tugaskan pekerjaan baru ke teknisi di sini jika dibutuhkan
+            }
+
             return response()->json(['message' => 'Status working order berhasil diubah.']);
         } else {
             return response()->json(['error' => 'Working order tidak ditemukan.'], 404);
         }
-
-        return redirect()->back();
     }
+
+
 
 
     public function onService()
@@ -496,6 +455,7 @@ class ServiceController extends Controller
             BookingModel::create([
                 'no_polisi' =>   $noPolisi,
                 'tgl_booking' => $request->tgl_booking,
+                'waktu_mulai' => $request->waktu_mulai,
                 'service_type' => $request->service_type,
                 'keluhan' => $request->keluhan,
             ]);
@@ -551,84 +511,6 @@ class ServiceController extends Controller
         return view('admin.inputWO', compact('title', 'dataWo', 'bensinOptions', 'dieselOptions', 'booking'));
     }
 
-
-    // public function submitWO(Request $request)
-    // {
-    //     $user = User::where('nama', $request->pic_Service)->first();
-    //     // $sparepart = $request->input('sparepart', []);
-    //     // $sparepartJSON = json_encode($sparepart);
-
-    //     // $sparepartCount = count($sparepart);
-
-    //     // $biaya = $sparepartCount * 5000;
-    //     // $estimasi_waktu = $sparepartCount * 5;
-
-    //     $booking = BookingModel::where('no_polisi', $request->no_polisi)->where('status', 'pending')->first();
-    //     $estimasi_waktu = $request->estimatedTime;
-    //     $jam_estimasi_selesai = floor($estimasi_waktu / 60);
-    //     $menit_estimasi_selesai = $estimasi_waktu % 60;
-    //     $waktu_estimasi_selesai = sprintf('%02d:%02d:00', $jam_estimasi_selesai, $menit_estimasi_selesai);
-    //     // $namaSpareparts = $request->input('parts'); // Array berisi nama-nama sparepart
-    //     $namaLayanans = $request->input('service'); // Array berisi nama-nama sparepart
-
-    //     // Ambil hanya field 'nama' dari setiap elemen array
-    //     // $namaSparepartsNames = [];
-    //     // foreach ($namaSpareparts as $sparepart) {
-    //     //     $sparepartData = json_decode($sparepart);
-    //     //     $namaSparepartsNames[] = $sparepartData->nama;
-    //     // }
-    //     // $namaSparepartsJson = json_encode($namaSparepartsNames); // Mengonversi array menjadi string JSON
-
-
-    //     $namaLayanansJson = json_encode($namaLayanans); // Mengonversi array menjadi string JSON
-
-
-    //     WorkingOrderModel::create([
-    //         'no_wo' => $request->no_wo,
-    //         'tanggal_mulai' => $request->tanggal_mulai,
-    //         'waktu_mulai' => $request->waktu_mulai,
-    //         'no_polisi' => $request->no_polisi,
-    //         'service_advisor' =>  $user->id,
-    //         'status' => 'prepare',
-    //         'waktu_estimasi_selesai' => $waktu_estimasi_selesai,
-    //         'biaya' => $request->estimatedCost,
-    //         'biaya_tambahan' => $request->biaya_tambahan,
-    //         // 'sparepart' => $namaSparepartsJson,
-    //         'layanan' => $namaLayanansJson,
-    //         'layanan_tambahan' => $request->layanan_tambahan,
-    //         'tgl_booking' => $booking->tgl_booking,
-    //         'tanggal_estimasi_selesai' => today(),
-
-    //     ]);
-
-    //     //Update Pelanggan
-    //     $pelanggan = PelangganModel::where('no_polisi', $request->no_polisi)->first();
-
-    //     $pelanggan->update([
-    //         'no_rangka' => $request->no_rangka,
-    //         'kilometer' => $request->kilometer1,
-    //         'tanggal_registrasi' => now(),
-    //     ]);
-
-    //     //Update Status Booking
-    //     $booking = BookingModel::where('no_polisi', $request->no_polisi)->first();
-
-    //     $booking->update([
-    //         'status' => 'prepare',
-    //         'no_wo' => $request->no_wo,
-    //     ]);
-
-    //     $wo = WorkingOrderModel::all();
-    //     $last = $wo->last();
-    //     $id = $last->no_wo;
-    //     $dataWo = WorkingOrderModel::where('no_wo', $id)->first();
-    //     $title = 'BMW OFFICE';
-
-
-
-    //     return redirect()->route('detailWO', ['id' => $id])->with(compact('dataWo', 'title'));
-    // }
-
     public function submitWO(Request $request)
     {
         $user = User::where('nama', $request->pic_Service)->first();
@@ -670,6 +552,7 @@ class ServiceController extends Controller
         $namaLayanans = $request->input('service');
         $namaLayanansJson = json_encode($namaLayanans);
 
+
         WorkingOrderModel::create([
             'no_wo' => $request->no_wo,
             'tanggal_mulai' => $request->tanggal_mulai,
@@ -680,6 +563,7 @@ class ServiceController extends Controller
             'waktu_estimasi_selesai' => $waktu_estimasi_selesai,
             'biaya' => $request->estimatedCost,
             'biaya_tambahan' => $request->biaya_tambahan,
+            'waktu_tambahan' => $request->waktu_tambahan,
             'layanan' => $namaLayanansJson,
             'layanan_tambahan' => $request->layanan_tambahan,
             'tgl_booking' => $booking->tgl_booking,
@@ -884,26 +768,26 @@ class ServiceController extends Controller
             ->where('db_wo.no_wo', $no_wo)
             ->first();
 
-            $waktuMulai = explode(':', $woData->waktu_mulai);
-            $estimasiSelesai = explode(':', $woData->waktu_estimasi_selesai);
-            
-            $hour = $waktuMulai[0] + $estimasiSelesai[0];
-            $minute = $waktuMulai[1] + $estimasiSelesai[1];
-            $second = $waktuMulai[2] + $estimasiSelesai[2];
-            
-            // Menangani penambahan yang melebihi 60 untuk jam, menit, dan detik
-            if ($second >= 60) {
-                $second -= 60;
-                $minute += 1;
-            }
-            
-            if ($minute >= 60) {
-                $minute -= 60;
-                $hour += 1;
-            }
-            
-            $estimasiSelesaiString = sprintf('%02d:%02d:%02d', $hour, $minute, $second);
-            $woData->estimasi_selesai = $estimasiSelesaiString;
+        $waktuMulai = explode(':', $woData->waktu_mulai);
+        $estimasiSelesai = explode(':', $woData->waktu_estimasi_selesai);
+
+        $hour = $waktuMulai[0] + $estimasiSelesai[0];
+        $minute = $waktuMulai[1] + $estimasiSelesai[1];
+        $second = $waktuMulai[2] + $estimasiSelesai[2];
+
+        // Menangani penambahan yang melebihi 60 untuk jam, menit, dan detik
+        if ($second >= 60) {
+            $second -= 60;
+            $minute += 1;
+        }
+
+        if ($minute >= 60) {
+            $minute -= 60;
+            $hour += 1;
+        }
+
+        $estimasiSelesaiString = sprintf('%02d:%02d:%02d', $hour, $minute, $second);
+        $woData->estimasi_selesai = $estimasiSelesaiString;
 
         $pdfFileName = 'wo_' . $no_wo . '.pdf';
 
@@ -911,7 +795,7 @@ class ServiceController extends Controller
         $names = [];
         $prices = [];
         foreach ($dataArray as $item) {
-            $itemArray = json_decode($item, true); 
+            $itemArray = json_decode($item, true);
             $names[] = $itemArray['nama'];
 
             $formattedPrice = 'Rp. ' . number_format(floatval($itemArray['harga']), 0, ',', '.');
@@ -936,7 +820,7 @@ class ServiceController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $pdfFileName . '"',
         ];
 
-   
+
         return response($pdf->output(), 200, $headers);
     }
 
@@ -1040,14 +924,14 @@ class ServiceController extends Controller
     //modify FIRDA
     public function getPaymentData(Request $request)
     {
-    
+
         $selectedDate = $request->query('date');
 
         $paymentData = WorkingOrderModel::whereDate('tanggal_mulai', $selectedDate)->get();
         $noPlatArray = $paymentData->pluck('no_polisi')->toArray();
         $pelangganData = PelangganModel::whereIn('no_polisi', $noPlatArray)->get();
 
-       
+
         $mergedData = [];
         $totalHarga = 0;
 

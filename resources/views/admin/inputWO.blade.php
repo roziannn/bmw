@@ -213,34 +213,30 @@
                                                                 <div class="my-3 row">
                                                                     <!-- Kolom Service Tambahan -->
                                                                     <div class="col-md-6">
-                                                                        <label for="serviceTambahan"
-                                                                            class="form-label">Service Tambahan</label>
+                                                                        <label for="serviceTambahan" class="form-label">Service Tambahan</label>
                                                                         <textarea class="form-control" id="layanan_tambahan" name="layanan_tambahan" rows="3"></textarea>
                                                                     </div>
-
+                                                                
                                                                     <!-- Kolom Biaya Tambahan -->
                                                                     <div class="col-md-6">
-                                                                        <label for="biayaTambahan"
-                                                                            class="form-label">Biaya Tambahan</label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="biaya_tambahan" name="biaya_tambahan"
-                                                                            placeholder="Biaya Tambahan">
+                                                                        <label for="biayaTambahan" class="form-label">Biaya Tambahan</label>
+                                                                        <input type="text" class="form-control" id="biaya_tambahan" name="biaya_tambahan" placeholder="Biaya Tambahan">
+                                                                        
+                                                                        <label for="waktuTambahan" class="form-label">Waktu Tambahan <small class="text-muted"> (dalam menit)</small></label>
+                                                                        <input type="text" class="form-control" id="waktu_tambahan" name="waktu_tambahan" placeholder="Masukkan angka">
                                                                     </div>
-
+                                                                
                                                                     <!-- Kolom Service Cover (Checkbox) -->
                                                                     <div class="col-md-6 my-2">
-                                                                        <label for="serviceCover"
-                                                                            class="form-label mx-2">Service
-                                                                            Cover</label>
+                                                                        <label for="serviceCover" class="form-label mx-2">Service Cover</label>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" id="serviceCoverCheckbox"
-                                                                                name="serviceCover" value="active">
-                                                                            <label class="form-check-label"
-                                                                                for="serviceCoverCheckbox">Active</label>
+                                                                            <input class="form-check-input" type="checkbox" id="serviceCoverCheckbox" name="serviceCover" value="active">
+                                                                            <label class="form-check-label" for="serviceCoverCheckbox">Active</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                
+
                                                                 <div class="mb-3">
                                                                     {{-- <label for="hours" class="form-label">Jam Kerja</label> --}}
                                                                     <input type="hidden" class="form-control"
@@ -341,6 +337,7 @@
         const estimatedTimeSpan = document.getElementById('estimatedTime');
         const serviceCoverCheckbox = document.getElementById('serviceCoverCheckbox');
         const biayaTambahanInput = document.getElementById('biaya_tambahan'); // Tambahkan ID ke input biaya tambahan
+        const waktuTambahanInput = document.getElementById('waktu_tambahan'); // Tambahkan ID ke input biaya tambahan
 
         function edit() {
             // Ambil formulir dengan ID "woForm" dan submitkan
@@ -374,6 +371,10 @@
             // Tambahkan biaya tambahan ke totalCost
             if (biayaTambahanInput.value) {
                 totalCost += parseFloat(biayaTambahanInput.value);
+            }
+
+            if (waktuTambahanInput.value) {
+                totalAllwaktu += parseFloat(waktuTambahanInput.value);
             }
 
             estimatedCostSpan.textContent = totalCost.toLocaleString('id-ID');
@@ -448,6 +449,8 @@
                         document.getElementById("keluhan").value = data.service ? data.service.keluhan : '';
                         // Isi elemen input "tgl_booking" dengan tgl_booking_terbaru
                         document.getElementById("tanggal_mulai").value = data.tgl_booking_terbaru;
+                        document.getElementById("waktu_mulai").value = data.service ? data.service.waktu_mulai : '';
+
                     } else {
                         // Handle jika data pelanggan tidak ditemukan
                         alert("Data pelanggan tidak ditemukan.");

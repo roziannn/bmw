@@ -639,12 +639,6 @@
 
 
 
-
-
-
-
-
-
     <script>
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent form submission
@@ -658,11 +652,6 @@
             }
         });
     </script>
-
-
-
-
-
 
 
     <script>
@@ -722,18 +711,26 @@
                             modalNoRangkaElement.textContent = `No Rangka : ${data.NoRangka}`;
                             modalJenisKendaraanElement.textContent =
                                 `Jenis Kendaraan : ${data.JenisKendaraan}`;
-                            modalJLElement.textContent = `Layanan : ${data.JenisLayanan}` + `, `+ `${data.LayananTambahan}`;
-                            
-                            // modalNoPSElement.textContent =
-                            //     `Pengerjaan : ${data.layanan}`;
+
+                            //this is modify by f 10/11/2023
+                            const jenisLayanan = data.JenisLayanan || [];
+                            const layananTambahan = data.LayananTambahan || [];
+                            const allLayanan = jenisLayanan.concat(layananTambahan);
+
+                            const layanan = data.JenisLayanan.join(', ');
+                            modalJLElement.textContent = `Layanan : ${allLayanan}`;
+
+
                             modalEsWElement.textContent =
                                 `Estimasi Waktu : ${data.EstimasiWaktu} menit`;
+
+
 
                             const maintenanceForm = document.getElementById('maintenanceForm');
                             const submitButton = document.getElementById('submitButton');
 
                             maintenanceForm.innerHTML = '';
-                            data.Layanan.forEach(layanan => {
+                            allLayanan.forEach(layanan => {
                                 const label = document.createElement('label');
                                 const input = document.createElement('input');
                                 input.type = 'radio';
@@ -783,9 +780,6 @@
                 const selectedTechnicianIds = Array.from(selectedTechnicians).map(checkbox => checkbox
                     .value);
 
-                // ... (Kode sebelumnya)
-
-                // Tutup modal
                 $('#taskModal').modal('hide');
             });
         });
@@ -816,26 +810,6 @@
         });
     </script>
 
-    {{-- <script>
-        function performService(teknisiId) {
-            // Panggil fungsi update melalui Ajax atau metode lain
-            // Contoh: fetch('url', { method: 'POST', body: teknisiId });
-
-            // Tampilkan notifikasi di elemen "notification"
-            var notificationElement = document.getElementById('serviceButton');
-            notificationElement.innerHTML = 'Service selesai dapat melanjutkan pembayaran.';
-            notificationElement.style.display = 'block';
-            alert('Service selesai. Silakan melanjutkan pembayaran.');
-
-            var button = document.getElementById('serviceButton');
-            button.style.backgroundColor = 'darkgreen'; // Ubah warna latar belakang
-            button.style.color = 'white'; // Ubah warna teks
-            button.disabled = true; // Nonaktifkan tombol
-            button.innerHTML = "Service Completed"; // Ubah teks tombol
-
-
-        }
-    </script> --}}
     {{-- modify firda --}}
     <script>
         function performService(teknisiId) {
@@ -896,7 +870,6 @@
             const modalEsW1Element = document.getElementById("modalEsW1");
             const modalNoPolElement = document.getElementById("modalNoPol");
             teknisiIdElement.textContent = ""
-            // teknisiIdElement.textContent = "Teknisi ID :" + teknisiId;// Menyimpan id_teknisi di elemen tersembunyi
             fetch(`/teknisi/mengerjakan/${teknisiId}`)
                 .then(response => response.json())
                 .then(data => {
@@ -911,20 +884,19 @@
                     namaTeknisi.textContent = "Nama Teknisi: " + data.NamaTeknisi;
                     modalNoPolElement.textContent = "No Polisi: " + data.NomorPolisi;
 
-                    const layanan = data.JenisLayanan.join(', ');
-                    modalNoPS1Element.textContent = `Layanan : ${data.JenisLayanan}` + `, ` + `${data.LayananTambahan}`;
-                    modalEsW1Element.textContent = `Estimasi Waktu : ${data.EstimasiWaktu} menit`;
-
-                    console.log(layanan);
-
-                    //this is modify by f
-                    const jenisLayanan = data.JenisLayanan;
-                    const layananTambahan = data.LayananTambahan;
+                    //this is modify by f 10/11/2023
+                    const jenisLayanan = data.JenisLayanan || [];
+                    const layananTambahan = data.LayananTambahan || [];
                     const allLayanan = jenisLayanan.concat(layananTambahan);
+
+                    modalNoPS1Element.textContent = `Layanan : ${allLayanan}`;
+                    modalEsW1Element.textContent = `Estimasi Waktu : ${data.EstimasiWaktu}` +  ` menit`;
+
                     //---
                     const maintenanceForm = document.getElementById('maintenanceForm');
                     maintenanceForm.innerHTML = '';
                     //modify to all
+                    
                     allLayanan.forEach(layanan => {
                         const label = document.createElement('label');
                         const input = document.createElement('input');
@@ -947,9 +919,7 @@
                     radioButtons.forEach(radioButton => {
                         radioButton.addEventListener('change', function() {
                             const selectedValue = this.value;
-                            console.log(`Anda memilih: ${selectedValue}`);
-                            // const selectedSparepartElement = document.getElementById('selectedSparepart');
-                            // selectedSparepartElement.textContent = `${selectedValue}`;                          
+                            console.log(`Anda memilih: ${selectedValue}`);                   
                         });
                     });
 
@@ -971,8 +941,6 @@
             closeModalButton.addEventListener("click", function() {
                 modal.style.display = 'none';
             });
-            // Tutup modal
-
         }
     </script>
 
@@ -1018,11 +986,8 @@
     <script>
         // Fungsi yang akan dijalankan saat tombol diklik dengan parameter
         function performService(param1) {
-            // Jalankan API di sini dengan menggunakan parameter yang diberikan
-            // Misalnya, menggunakan metode fetch untuk melakukan GET request ke suatu URL dengan parameter
             fetch(`/updatePembayaran/${param1}`, {
                     method: 'GET'
-                    // Tambahkan konfigurasi lain yang diperlukan untuk API Anda
                 })
                 .then(response => response.json())
                 .then(data => {

@@ -218,15 +218,17 @@
                                                             aria-label="no_rangka" aria-describedby="addon-wrapping">
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary">Confirm</button>
                                                     </div>
                                                 </form>
                                             </div>
 
                                             <div id="oldCustomerForm" style="display: none;">
                                                 <!-- Form for Old Customer -->
-                                                <form  action="/booking" method="post">
+                                                <form action="/booking" method="post">
                                                     @csrf
                                                     <div class="input-group input-group-lg flex-nowrap mb-2">
                                                         <input type="text" class="form-control"
@@ -238,8 +240,9 @@
                                                             id="tanggal_oldCust" value="" required hidden>
                                                     </div>
                                                     <div class="input-group input-group-lg flex-nowrap mb-2">
-                                                        <input type="text" name="service_type" class="form-control"
-                                                            id="service_type" value=" " required hidden>
+                                                        <input type="text" name="service_type"
+                                                            class="form-control" id="service_type" value=" "
+                                                            required hidden>
                                                     </div>
                                                     <script>
                                                         document.addEventListener("DOMContentLoaded", function() {
@@ -248,14 +251,16 @@
                                                         });
                                                     </script>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary">Confirm</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                          
+
                                         </div>
                                     </div>
                                 </div>
@@ -302,9 +307,13 @@
                                                 <textarea class="form-control mb-3" name="keluhan" id="keluhan" cols="2" rows="3"
                                                     placeholder="*keluhan optional..."></textarea>
                                                 <div class="input-group input-group-lg flex-nowrap mb-2">
-                                                    <input type="date" class="form-control" aria-label="tgl_booking"
-                                                        aria-describedby="addon-wrapping" name="tgl_booking"
-                                                        min="<?php echo date('Y-m-d'); ?>">
+                                                    <input type="date" class="form-control"
+                                                        aria-label="tgl_booking" aria-describedby="addon-wrapping"
+                                                        name="tgl_booking" min="<?php echo date('Y-m-d'); ?>">
+                                                </div>
+                                                <div class="input-group input-group-lg flex-nowrap mb-2">
+                                                    <input required type="time" class="form-control" id="waktu_mulai"
+                                                        name="waktu_mulai">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -374,6 +383,12 @@
                                     aria-label="tanggal_booking" aria-describedby="addon-wrapping" name="tgl_booking"
                                     min="<?php echo date('Y-m-d'); ?>">
                             </div>
+                          
+                            <div class="input-group input-group-lg flex-nowrap mb-2">
+                                <input required type="time" class="form-control" id="waktu_mulai"
+                                    name="waktu_mulai">
+                            </div>
+
                             <button class="btn btn-success w-100" type="submit">Confirm</button>
                             <p class="fs-5">Already Booked? <a href="/login/customer">klik disini</a></p>
                         </form>
